@@ -56,15 +56,17 @@ write_csv(datos, "datos/ine_desempleo_sexo_nivel_estudios.csv")
 datos <- read_csv2("datos/ine_en_bruto/ine_desigualdad_comunidad_autonoma.csv")
 
 datos <- datos |> 
-  janitor::clean_names() |> 
-  rename(porcentaje = total)
+  janitor::clean_names()  
 
 datos <- datos |> 
   filter(comunidades_y_ciudades_autonomas != "Total Nacional") |> 
   mutate(comunidades_y_ciudades_autonomas = 
            str_replace(comunidades_y_ciudades_autonomas, "\\d+\\s+", "")) |> 
   rename(anno = periodo) |> 
-  filter(desigualdad_en_la_distribucion_de_ingresos_s80_s20_y_coeficiente_de_gini == "Gini")
+  filter(desigualdad_en_la_distribucion_de_ingresos_s80_s20_y_coeficiente_de_gini == "Gini") |> 
+  select(!desigualdad_en_la_distribucion_de_ingresos_s80_s20_y_coeficiente_de_gini) |> 
+  rename(Gini = total) |> 
+  mutate(Gini = Gini/100)
 
 write_csv(datos, "datos/ine_desigualdad_comunidad_autonoma.csv")
 
