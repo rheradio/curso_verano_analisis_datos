@@ -2,28 +2,83 @@ install.packages("tidyverse", "ggrepel", "palmerpenguins")
 
 library(tidyverse)
 
-# EDA - VARIACIÓN ---------------------------------------------------------------
+# VARIACIÓN ---------------------------------------------------------------
 
 ## 1 Variable numérica --------------------------------------------------
 
+### Galton ------------------------------------------------------------------
+
+galton <- read_csv("datos/galton.csv") 
+
+# Rango
+
+galton |> 
+  summarize(
+    min = min(child),
+    max = max(child)
+  )
+
+# Percentiles al 95%
+
+galton |> 
+  summarize(
+    inf = quantile(child, 0.25/2),
+    sup = quantile(child, 1-0.25/2),
+    mediana_metodo_1 = quantile(child, 0.5),
+    mediana_metodo_2  = median(child)
+  )
+
+# Histograma
+
+galton |> 
+  ggplot(aes(x = child)) +
+  geom_density(fill = "lightblue")
+
+# Media y varianza
+
+galton |> 
+  summarize(
+    media = mean(child),
+    varianza = var(child),
+    desviacion = sd(child)
+  )
+
+### Número de parejas  ------------------------------------------------------------------
+
 parejas <- read_csv("datos/numero_de_parejas_por_sexo.csv")
+
+# Histograma
+# Prueba a cambiar el nº de bars. Prueba con binwidth o con bins  
 
 parejas |> 
   filter(sexo == "Hombre") |> 
   ggplot(aes(x = numero_de_parejas)) +
   geom_histogram()
 
-# Cambia el nº de bars. Prueba con binwidth o con bins  
+# Gráfica de densidad
 
 parejas |> 
   filter(sexo == "Hombre") |> 
   ggplot(aes(x = numero_de_parejas)) +
-  geom_density()
+  geom_density(fill = "lightblue")
+
+# Los valores atípicos (outliers) ofuscan la visualización
+
+# Método 1: quitamos los valores atípicos
+
+parejas |> 
+  filter(sexo == "Hombre") |> 
+  filter(numero_de_parejas < 30) |>
+  ggplot(aes(x = numero_de_parejas)) +
+  geom_density(fill = "lightblue") +
+  scale_x_continuous(breaks = seq(0, 30, 2))
+
+# Método 2: hacemos zoom
 
 parejas |> 
   filter(sexo == "Hombre") |> 
   ggplot(aes(x = numero_de_parejas)) +
-  geom_density() +
+  geom_density(fill = "lightblue") +
   coord_cartesian(xlim = c(0, 30)) +
   scale_x_continuous(breaks = seq(0, 30, 2))
 
@@ -33,17 +88,25 @@ parejas |>
 
 james_bond <- read_csv("datos/james_bond.csv")
 
+### Gráfica de barras
+
 james_bond |> 
   ggplot(aes(x = Bond)) +
   geom_bar()
+
+# intercambiamos los ejes
 
 james_bond |> 
   ggplot(aes(y = Bond)) +
   geom_bar()
 
+# Ordenamos las barras
+
 james_bond |> 
   ggplot(aes(y = fct_infreq(Bond))) +
   geom_bar(aes(fill = Bond), color = "black") 
+
+# Diagramas de tarta
 
 james_bond |> 
   ggplot(aes(y = factor(1), fill = Bond)) +
@@ -53,13 +116,17 @@ james_bond |>
         text = element_blank(),
         title = element_blank())
 
-### Estaciones Tren (Media y Larga Distancia) -------------------------------
+### Solución a Estaciones Tren (Media y Larga Distancia) -------------------------------
 
-estaciones_tren <- read_csv("datos/estaciones_tren_larga_y_media_distancia.csv")
+# NO HAGAS TRAMPA !!!!!!!!!!!!!!!!!!!!!!!!
 
-estaciones_tren |> 
-  ggplot(aes(y = fct_infreq(provincia))) +
-  geom_bar() 
+# estaciones_tren <- read_csv("datos/estaciones_tren_larga_y_media_distancia.csv")
+# 
+# estaciones_tren |> 
+#   ggplot(aes(y = fct_infreq(provincia))) +
+#   geom_bar() 
+# 
+# ggsave("figuras/estaciones_tren.pdf", width = 5, height = 6)
 
 ## Valores atípicos (outliers) ---------------------------------------------
 
@@ -98,7 +165,7 @@ ggplot(diamonds_limipieza_menos_drastica, aes(x = y)) +
 
 # ggplot nos avisa de que hay NAs
 
-# EDA - COVARIACIÓN -------------------------------------------------------------
+# COVARIACIÓN -------------------------------------------------------------
 
 ## 1 Variable numérica según una categórica -----------------------------------
 
