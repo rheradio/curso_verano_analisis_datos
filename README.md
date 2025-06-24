@@ -8,10 +8,10 @@
 
 ## [Contenidos y Planificación:](figuras/triptico.pdf)
 
-[![Información del curso](figuras/contenidos.jpg){width="1432"}](figuras/triptico.pdf)
+[![Información del curso](figuras/contenidos.jpg)](figuras/triptico.pdf)
 
 ------------------------------------------------------------------------
 
 ## [Cuestionario: ¿Qué te ha parecido el curso?](https://forms.office.com/e/vdGRntxrVB)
 
-[![Cuestionario](figuras/cuestionario.jpg){width="1432"}](https://forms.office.com/e/vdGRntxrVB)
+[![Cuestionario](figuras/cuestionario.jpg)](https://forms.office.com/e/vdGRntxrVB)
