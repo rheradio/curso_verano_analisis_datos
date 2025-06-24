@@ -1,4 +1,4 @@
-# Análisis y Visualización de Datos: Estadística Práctica con R e Inteligencia Artificial
+# **Análisis y Visualización de Datos: Estadística Práctica con R e Inteligencia Artificial**
 
 ## ***Cursos de Verano de la UNED en Plasencia (25-27 de junio de 2025)***
 
@@ -8,7 +8,7 @@
 
 ## [Contenidos y Planificación:](figuras/triptico.pdf)
 
-[![Información del curso](figuras/contenidos.jpg)](figuras/triptico.pdf)
+[![Información del curso](figuras/contenidos.jpg){width="1432"}](figuras/triptico.pdf)
 
 ------------------------------------------------------------------------
 
