@@ -1,0 +1,44 @@
+Asturias: +
+Barcelona: ++
+Almería: ++
+Murcia: ++
+Granada: +++
+Burgos: +++
+Araba/Álava: +++
+Sevilla: +++
+Rioja, La: +++
+Madrid: +++
+Córdoba: ++++
+Castellón/Castelló: ++++
+Cádiz: ++++
+Soria: ++++
+Jaén: ++++
+Albacete: ++++
+Segovia: +++++
+Guadalajara: +++++
+Zamora: +++++
+Cáceres: +++++
+Ávila: +++++
+Alicante/Alacant: ++++++
+Valencia/València: ++++++
+Cuenca: ++++++
+Salamanca: +++++++
+Málaga: +++++++
+Navarra: +++++++
+Valladolid: +++++++
+Lugo: ++++++++
+Lleida: ++++++++
+Ourense: ++++++++
+Huelva: ++++++++
+Ciudad Real: ++++++++
+Toledo: +++++++++
+Huesca: +++++++++
+Girona: +++++++++
+Teruel: +++++++++
+Palencia: ++++++++++
+Pontevedra: ++++++++++
+Badajoz: ++++++++++
+Coruña, A: ++++++++++
+León: +++++++++++
+Zaragoza: +++++++++++++
+Tarragona: ++++++++++++++++
