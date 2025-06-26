@@ -13,5 +13,5 @@ life_2015 <- na.omit(data_2015$Life.expectancy)
 t_result <- t.test(life_2000, life_2015, paired=TRUE)
 
 # Tamaño del efecto
-library(lsr)
+library(effectsize)
 cohens_d(life_2000, life_2015, paired = T)
