@@ -119,24 +119,25 @@ into.the.ci.poblational <- 0
 into.the.ci.sample <- 0
 p <- 0.2
 n <- 50
+times <- 1000
 poblational.mean <- (1-p)/p
 poblational.sd <- sqrt((1-p)/((p^2)*n))
-for (i in 1:100) {
+for (i in 1:times) {
   sample <-  rgeom(n, p)
   sample.mean <- mean(sample)
-  sample.se <- sd(sample)/sqrt(n)
-  low.poblational <- sample.mean - 1.96*(poblational.sd/sqrt(sample.size))
-  high.poblational <- sample.mean + 1.96*(poblational.sd/sqrt(sample.size))
+  sample.sd <- sd(sample)
+  sample.se <- sqrt(sum((sample - sample.mean)^2) / ((n - 1)*n))
+  low.poblational <- sample.mean - 1.96*(poblational.sd)
+  high.poblational <- sample.mean + 1.96*(poblational.sd)
   low.sample <- sample.mean - 1.96*(sample.se)
   high.sample <- sample.mean + 1.96*(sample.se)
-  
-  print(c(low.poblational, high.poblational))
-  print(c(low.sample, high.sample))
-  if ( (poblational.mean >= low) && (poblational.mean <= high)) {
+  print(c(low.poblational, high.poblational, low.sample, high.sample))
+  if ( (poblational.mean >= low.poblational) && (poblational.mean <= high.poblational)) {
     into.the.ci.poblational <- into.the.ci.poblational + 1
   }
-  if ( (sample.mean >= low.sample) && (sample.mean <= high.sample)) {
+  if ( (poblational.mean >= low.sample) && (sample.mean <= high.sample)) {
     into.the.ci.sample <- into.the.ci.sample + 1
   }
 }
 print(c(into.the.ci.poblational, into.the.ci.sample))
+
