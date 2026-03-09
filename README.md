@@ -1,6 +1,6 @@
 # **Análisis y Visualización de Datos: Estadística Práctica con R e Inteligencia Artificial**
 
-## ***Cursos de Verano de la UNED en Plasencia (25-27 de junio de 2025)***
+## ***Cursos de Verano de la UNED en Plasencia (8-10 de julio de 2026)***
 
 ![](figuras/titulo.png)
 
