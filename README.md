@@ -10,8 +10,3 @@
 
 [![Información del curso](figuras/contenidos.jpg)](figuras/triptico.pdf)
 
-------------------------------------------------------------------------
-
-## [Cuestionario: ¿Qué te ha parecido el curso?](https://forms.office.com/e/vdGRntxrVB)
-
-[![Cuestionario](figuras/cuestionario.jpg)](https://forms.office.com/e/vdGRntxrVB)
