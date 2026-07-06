@@ -2,7 +2,6 @@
 
 library(tidyverse)
 
-
 # Motivación --------------------------------------------------------------
 
 set.seed(125)
@@ -49,11 +48,12 @@ galton |>
     mediana_metodo_2 = median(child)
   )
 
-# Histograma
+# Diagrama de densidad
 
 galton |>
   ggplot(aes(x = child)) +
   geom_density(fill = "lightblue")
+
 
 # Media y varianza
 
@@ -114,7 +114,7 @@ parejas <- read_csv("datos/numero_de_parejas_por_sexo.csv")
 parejas |>
   filter(sexo == "Hombre") |>
   ggplot(aes(x = numero_de_parejas)) +
-  geom_histogram()
+  geom_histogram(bins = 30)
 
 # Gráfica de densidad
 
@@ -153,6 +153,7 @@ parejas |>
 james_bond |>
   ggplot(aes(x = Bond)) +
   geom_bar()
+  
 
 # intercambiamos los ejes
 
@@ -161,6 +162,12 @@ james_bond |>
   geom_bar()
 
 # Ordenamos las barras
+
+james_bond |>
+  ggplot(aes(y = fct_infreq(Bond))) +
+  geom_bar()
+
+# Añadimos colores
 
 james_bond |>
   ggplot(aes(y = fct_infreq(Bond))) +
