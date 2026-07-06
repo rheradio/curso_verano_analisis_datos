@@ -2,6 +2,27 @@
 
 library(tidyverse)
 
+
+# Motivación --------------------------------------------------------------
+
+set.seed(125)
+
+TAMANO_MUESTRAL_POR_GRUPO <- 5
+tiempo_recuperacion_normal <- rnorm(TAMANO_MUESTRAL_POR_GRUPO, 
+                                    240, 120) # 10+-5 días
+tiempo_recuperacion_medicina <- rnorm(TAMANO_MUESTRAL_POR_GRUPO,
+                                      192, 72) # 5 +-3 días
+tibble(tiempo_recuperacion = c(tiempo_recuperacion_normal,
+                               tiempo_recuperacion_medicina),
+       grupo = c(rep("sin medicina", TAMANO_MUESTRAL_POR_GRUPO),
+                 rep("con medicina", TAMANO_MUESTRAL_POR_GRUPO))
+) |> 
+  ggplot(aes(x = tiempo_recuperacion, y = grupo, color = grupo)) +
+  geom_point(size = 2) +
+  labs(
+    x = "tiempo de recuperación (en horas)"
+  )
+
 # Variación ---------------------------------------------------------------
 
 ## 1 Variable numérica --------------------------------------------------
