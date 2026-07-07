@@ -7,3 +7,10 @@ cholesterol$subjects <- subjects
 aov.model <- aov(cholesterol$response ~ cholesterol$trt +
                    Error(cholesterol$subjects/cholesterol$trt))
 summary(aov.model)
+
+#Tamaño del efecto
+eta.squared <- 1351.4/(1351.4+237.4)
+eta_squared(aov.model, partial = TRUE)
+
+#Post-hoc
+pairwise.t.test(cholesterol$response, cholesterol$trt, paired = TRUE)
