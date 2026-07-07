@@ -1,52 +1,74 @@
-library (clinfun)
-library (ggplot2)
-library (pastecs)
-library (pgirmess)
-library(ggplot2)
-#Importacion datos
-##################
-drug<-gl(2,10,length=20,labels=c("Extasis","Alcohol"),
-         ordered=T)
-sundayBDI<-c(15, 35, 16, 18, 19, 17, 27, 16, 13, 20,
+library(car)
+library(tidyverse)
+
+#####################
+#Importacion de datos
+#####################
+droga<-gl(2,10,length=20,labels=c("Extasis","Alcohol"), 
+          ordered=T)
+domingoBDI<-c(15, 35, 16, 18, 19, 17, 27, 16, 13, 20,
              16, 15, 20, 15, 16, 13, 14, 19, 18, 18)
-wedsBDI<-c(28, 35, 35, 24, 39, 32, 27, 29, 36, 35, 
+miercolesBDI<-c(28, 35, 35, 24, 39, 32, 27, 29, 36, 35, 
            5, 6, 30, 8, 9, 7, 6, 17, 3, 10)
-drugData<-data.frame(drug,sundayBDI,wedsBDI)
+drogaDatos<-data.frame(droga,domingoBDI,miercolesBDI)
 
 #Graficos
-boxplot(wedsBDI ~ drug)
-boxplot(sundayBDI ~ drug)
+boxplot(miercolesBDI ~ droga)
+boxplot(domingoBDI ~ droga)
 
 #Estadisticos
-
-by(drugData[, c("sundayBDI", "wedsBDI")], drugData$drug, 
-   stat.desc, basic = FALSE, norm = TRUE)
+#by(drogaDatos[, c("domingoBDI", "miercolesBDI")], 
+#   drogaDatos$droga, stat.desc, basic = FALSE, norm = TRUE)
+#Estadisticos
+estadisticos <- drogaDatos %>%
+  pivot_longer(
+    cols = c(domingoBDI, miercolesBDI), 
+    names_to = "dia", values_to = "BDI"
+  ) %>%
+  group_by(droga, dia) %>%
+  summarise(
+    n       = n(),
+    media   = mean(BDI),
+    sd      = sd(BDI),
+    mediana = median(BDI),
+    min     = min(BDI),
+    max     = max(BDI),
+    .groups = "drop"
+  )
+estadisticos
 
 #Contraste normalidad
-shapiro.test(wedsBDI)
-shapiro.test(sundayBDI)
+shapiro.test(miercolesBDI)
+shapiro.test(domingoBDI)
 
 #Contraste homogeneidad varianza
-leveneTest(drugData$wedsBDI, drugData$drug, center = mean)
-leveneTest(drugData$sundayBDI, drugData$drug, center = mean)
+leveneTest(drogaDatos$miercolesBDI, drogaDatos$droga, 
+           center = median)
+leveneTest(drogaDatos$domingoBDI, drogaDatos$droga, 
+           center = median)
 
-#Contraste Mann-Whitney
-######################
-#Test
-wedModel<-wilcox.test(wedsBDI ~ drug, data = drugData, 
-                      exact = FALSE, correct= FALSE)
-wedModel
+#######################
+#Test Mann-Whitney
+#######################
+miercolesModelo<-wilcox.test(miercolesBDI ~ droga, 
+                             data = drogaDatos, 
+                             exact = FALSE, correct= FALSE)
+miercolesModelo
 
-sunModel<-wilcox.test(sundayBDI ~ drug, data = drugData, 
-                      exact = FALSE,correct= FALSE)
-sunModel
+domingoModelo<-wilcox.test(domingoBDI ~ droga, 
+                           data = drogaDatos, 
+                           exact = FALSE, correct= FALSE)
+domingoModelo
 
-#Tamaño del efecto
-rFromWilcox<-function(wilcoxModel, N){
-  z<- qnorm(wilcoxModel$p.value/2)
+##################
+#Tamanio del efecto
+##################
+rFromWilcox<-function(wilcoxModelo, N){
+  z<- qnorm(wilcoxModelo$p.value/2)
   r<- z/ sqrt(N)
-  cat(wilcoxModel$data.name, "Effect Size, r = ", r)
+  cat(wilcoxModelo$data.name, "Tamanio del efecto, r = ", r)
 }
 
-rFromWilcox(sunModel, 20)
-rFromWilcox(wedModel, 20)
+rFromWilcox(domingoModelo, 20)
+rFromWilcox(miercolesModelo, 20)
+
