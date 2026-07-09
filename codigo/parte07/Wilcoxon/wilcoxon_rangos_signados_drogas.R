@@ -1,51 +1,56 @@
-library(clinfun)
+#####################
+#Importacion de datos
+#####################
+droga<-gl(2,10,length=20,labels=c("Extasis","Alcohol"),
+          ordered=T)
+domingoBDI<-c(15,35,16,18,19,17,27,16,13,20,
+              16,15,20,15,16,13,14,19,18,18)
+miercolesBDI<-c(28,35,35,24,39,32,27,29,36,35,
+                5,6,30,8,9,7,6,17,3,10)
+drogaDatos<-data.frame(droga,domingoBDI,miercolesBDI)
+alcoholDatos <- drogaDatos[drogaDatos$droga ==
+                          "Alcohol",]
+extasisDatos <- drogaDatos[drogaDatos$droga ==
+                          "Extasis",]
 
-#Importación datos
-##################
-drug<-gl(2,10,length=20,labels=c("Éxtasis","Alcohol"),ordered=T)
-sundayBDI<-c(15,35,16,18,19,17,27,16,13,20,16,15,20,15,16,13,14,19,18,18)
-wedsBDI<-c(28,35,35,24,39,32,27,29,36,35,5,6,30,8,9,7,6,17,3,10)
-drugData<-data.frame(drug,sundayBDI,wedsBDI)
-alcoholData <- drugData[drugData$drug ==
-                         "Alcohol",]
-extasisData <- drugData[drugData$drug ==
-                         "Éxtasis",]
-#Exploración datos
-#################
+#####################
+#Exploracion de datos
+#####################
 #Graficos
-boxplot(alcoholData[,2:3])
-boxplot(extasisData[,2:3])
+boxplot(alcoholDatos[,2:3])
+boxplot(extasisDatos[,2:3])
 
-#Estadísticos
-summary(alcoholData)
-summary(extasisData)
+#Estadisticos
+summary(alcoholDatos)
+summary(extasisDatos)
+
 #Contraste normalidad
-shapiro.test(alcoholData$wedsBDI)
-shapiro.test(alcoholData$sundayBDI)
-shapiro.test(extasisData$wedsBDI)
-shapiro.test(extasisData$sundayBDI)
+shapiro.test(alcoholDatos$miercolesBDI)
+shapiro.test(alcoholDatos$domingoBDI)
+shapiro.test(extasisDatos$miercolesBDI)
+shapiro.test(extasisDatos$domingoBDI)
 
+######################################
 #Contraste Rangos Signados de Wilcoxon
-######################
-#Test
-#newModel<-wilcox.test(outcome ~ predictor, data = dataFrame, paired = FALSE/TRUE)
+######################################
+alcoholModelo<-wilcox.test(alcoholDatos$miercolesBDI,
+                           alcoholDatos$domingoBDI,
+                           paired=T,correct=F,exact=F)
+alcoholModelo
 
-alcoholModel<-wilcox.test(alcoholData$wedsBDI,alcoholData$sundayBDI,paired=T,correct=F)
-alcoholModel
+extasisModelo<-wilcox.test(extasisDatos$miercolesBDI,
+                           extasisDatos$domingoBDI,
+                           paired=T,correct=F,exact=F)
+extasisModelo
 
-extasisModel<-wilcox.test(extasisData$wedsBDI,extasisData$sundayBDI,paired=T,correct=F)
-extasisModel
-
-
-#Tamaño del efecto
+###################
+#Tamanio del efecto
+###################
 rFromWilcox<-function(wilcoxModel, N){
   z<- qnorm(wilcoxModel$p.value/2)
   r<- z/ sqrt(N)
   cat(wilcoxModel$data.name, "Effect Size, r = ", r)
 }
 
-rFromWilcox(alcoholModel, 20)
-rFromWilcox(extasisModel, 20)
-
-
-
+rFromWilcox(alcoholModelo, 20)
+rFromWilcox(extasisModelo, 20)
